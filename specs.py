@@ -41,4 +41,19 @@ Transition_Function
     > to (new state, [(new tape_0 symbol, L/R/S), ..., (new tape_n symbol, L/R/S)])
 
 
+    Tracks:
+    [B, i, n, p, u, t, B, ...]
+    [B, B, B, ...]
+    [B, a, b, B, ...]
+    ...
+
+    Machine State = CurrentState, Tracks[1, 0, 3, ...]
+
+    Transition Function:
+        Current Machine State = [1, 2, ...]
+        New State, Actions = TransitionTable(State)
+    Action: (new symbol, +1/0/-1)
+    UpdateState(Actions):
+        for track, action in enumerate(Actions):
+
 

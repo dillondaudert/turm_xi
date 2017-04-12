@@ -12,14 +12,14 @@ class Computer():
     tape_alphabet = None
     transition_table = None
     start_state = None
-    self.tracks = None
+    tracks = None
 
     def __init__(self,
                  num_tracks: int,
                  states: set,
                  in_alpha: set,
                  tp_alpha: set,
-                 start_st: State,
+                 start_st,
                  trans_table: dict):
         self.states = states
         self.input_alphabet = in_alpha
@@ -33,16 +33,21 @@ class Computer():
         """Perform a computation of the string 'w', accept or reject"""
 
         current_state = self.start_state,
-        track_heads = [0 for i in range(num_tracks)])
         #Initialize the tracks
+        track_heads = [0 for i in range(num_tracks)]
         self.tracks = [["B" for i in range(len(w)+2)] for j in range(self.num_tracks)]
 
-        for i in range(1,len(w)+1)
+        for i in range(1,len(w)+1):
             self.tracks[0][i] = list(w)[i-1]
         print(self.tracks)
 
+        while not current_state.final:
+            current_state, track_heads = transition(current_state, track_heads)
+            print(self.tracks)
+
+
     def transition(self,
-                   current_state: State,
+                   current_state,
                    track_heads: list):
         """Transition the machine from one state to another,
         performing all necessary computations."""
@@ -64,7 +69,7 @@ class Computer():
                     #raise TrackOverflowError
                     print("Track head %d less than 0!" % i)
                     quit()
-            else if action == "R":
+            elif action == "R":
                 track_heads[i] += 1
                 if track_heads[i] >= len(self.tracks[i]):
                     #Append a blank to extend the track

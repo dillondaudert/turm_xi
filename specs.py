@@ -38,7 +38,7 @@ Tape_Set
 
 Transition_Function
     > A function mapping (state, [tape_0 symbol, tape_1 symbol, ..., tape_n symbol])
-    > to (new state, [(new tape_0 symbol, L/R/S), ..., (new tape_n symbol, L/R/S)])
+    > to (new state, [new tape_0 symbol, ..., new tape_n symbol], [tape_0 action, tape_2 action, ...])
 
 
     Tracks:
@@ -51,9 +51,6 @@ Transition_Function
 
     Transition Function:
         Current Machine State = [1, 2, ...]
-        New State, Actions = TransitionTable(State)
-    Action: (new symbol, +1/0/-1)
-    UpdateState(Actions):
-        for track, action in enumerate(Actions):
+        New State, New Track Values, Actions = TransitionTable(State)
 
 

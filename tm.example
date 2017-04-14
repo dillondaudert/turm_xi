@@ -1,5 +1,4 @@
-q0 | q2
 delta | B | a | b
-q0 | q1,B,R | - | - 
-q1 | q2,B,L | q1,b,R | q1,a,L
-q2 | - | q2,a,L | q2,a,L
+q0,N | q1,B,R | - | - 
+q1,N | q2,B,L | q1,b,R | q1,a,L
+q2,F | - | q2,a,L | q2,a,L

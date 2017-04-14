@@ -3,7 +3,7 @@ import os
 from parse import parse_tm
 
 def main():
-    expath = os.path.join(os.path.dirname(__file__), "examples", "tm.8_2_2")
+    expath = os.path.join(os.path.dirname(__file__), "examples", "tm.8_6_2")
     tm, strings = parse_tm(expath)
     for string in strings:
         tm.compute_string(string)

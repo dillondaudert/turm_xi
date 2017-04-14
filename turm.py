@@ -1,5 +1,8 @@
 #Turing Machine Machine object and support functions
 import collections
+from err import TransitionError
+
+DEBUG = False
 
 MachineState = collections.namedtuple('MachineState', ['current_state', 'track_heads'])
 
@@ -28,6 +31,7 @@ class Computer():
                        w: str):
         """Perform a computation of the string 'w', accept or reject"""
 
+        print("Computing: \"%s\"" % (w))
         current_state = self.start_state
         #Initialize the tracks
         track_heads = [0 for i in range(self.num_tracks)]
@@ -35,11 +39,19 @@ class Computer():
 
         for i in range(1,len(w)+1):
             self.tracks[0][i] = list(w)[i-1]
-        print(current_state.name, self.tracks)
+        if DEBUG:
+            print(current_state.name, self.tracks)
 
         while not current_state.final:
-            current_state, track_heads = self.transition(current_state, track_heads)
-            print(current_state.name, self.tracks)
+            try:
+                current_state, track_heads = self.transition(current_state, track_heads)
+            except TransitionError:
+                print("Reject")
+                break
+            if DEBUG:
+                print(current_state.name, self.tracks)
+        if current_state.final:
+            print("Accept")
 
 
     def transition(self,
@@ -53,10 +65,7 @@ class Computer():
             new_state, new_track_state, actions = self.transition_table[(current_state,
                                                                      tuple(track_state))]
         except KeyError as ke:
-            print("No valid transition exists for (",
-                   current_state.name, ", ", track_state,
-                   "). \nExiting...\n")
-            quit()
+            raise TransitionError
 
 
         #Modify the tracks

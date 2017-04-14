@@ -1,0 +1,8 @@
+delta | B        | a | b
+q0,N  | q1; B; R | - | -
+q1,N  | -        | q2; a; R | q1; b; R
+q2,N  | -        | q3; a; R | q1; b; R
+q3,F  | - | - | -
+-
+ababaababa
+abab

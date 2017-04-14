@@ -8,7 +8,9 @@ from err import ParseError
 DEBUG = True
 
 def parse_tm(t_file: str):
-    """Parse a transition table from a file."""
+    """Parse a transition table from a file.
+    See the examples for syntax.
+    At the moment, two strings to parse are expected in the input file."""
 
     with open(t_file, 'r') as csvfile:
 
@@ -30,10 +32,17 @@ def parse_tm(t_file: str):
         state_map[start_state.name] = start_state
 
         for row in reader:
+            if row[0] == "-":
+                break
             new_state = _parse_state(row[0], False)
             trans_map[new_state.name] = [_parse_transition(trans) for trans in row[1:]]
             states.add(new_state)
             state_map[new_state.name] = new_state
+        #Get the two strings to compute
+        str1 = next(reader)[0]
+        str2 = next(reader)[0]
+        assert type(str1) == str
+        assert type(str2) == str
 
         #Build transition function map
         trfunc = _create_transition_function(state_map, trans_map, inputs)
@@ -41,8 +50,8 @@ def parse_tm(t_file: str):
         alpha = set()
         [[alpha.add(letter) for letter in col] for col in inputs]
 
-    return Computer(states=states, start_st=start_state, alpha=alpha,
-                    trans_table=trfunc, num_tracks=num_tracks)
+    return (Computer(states=states, start_st=start_state, alpha=alpha,
+                    trans_table=trfunc, num_tracks=num_tracks), [str1, str2])
 
 def _create_transition_function(state_map: dict,
                                 trans_map: dict,

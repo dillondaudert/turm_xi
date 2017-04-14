@@ -1,0 +1,11 @@
+delta | B | a | b | c | X | Y | Z
+q0,N  | q1;B;R | - | - | - | - | - | -
+q1,N  | q6;B;R | q2;X;R | - | - | - | q5;Y;R | -
+q2,N  | - | q2;a;R | q3;Y;R | - | - | q2;Y;R | -
+q3,N  | - | - | q3;b;R | q4;Z;L | - | - | q3;Z;R
+q4,N  | - | q4;a;L | q4;b;L | - | q1;X;R | q4;Y;L | q4;Z;L
+q5,N  | q6;B;R | - | - | - | - | q5;Y;R | q5;Z;R
+q6,F  | - | - | - | - | - | - | -
+-
+aaaabbbbcccc
+aaabbccc

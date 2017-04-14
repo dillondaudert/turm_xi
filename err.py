@@ -2,3 +2,6 @@
 
 class ParseError(Exception):
     pass
+
+class TransitionError(Exception):
+    pass

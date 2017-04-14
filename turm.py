@@ -2,7 +2,7 @@
 import collections
 from err import TransitionError
 
-DEBUG = False
+DEBUG = True
 
 MachineState = collections.namedtuple('MachineState', ['current_state', 'track_heads'])
 
@@ -27,6 +27,22 @@ class Computer():
         self.num_tracks = num_tracks
         self.start_state = start_st
 
+    def print_tracks(self,
+                     track_heads):
+        """Pretty print the tracks for the computation trace."""
+        for i in range(self.num_tracks-1, -1, -1):
+            track_string = "Track {}:".format(i+1)
+            for j, cha in enumerate(self.tracks[i]):
+
+                leftb = "[" if j == 0 else ""
+                leftl = rightl = "|" if j == track_heads[i] else ""
+                rightb = "]" if j == len(self.tracks[i])-1 else ""
+                string = "{}{:1}{:1}{:1}{}".format(leftb, leftl, cha, rightl, rightb)
+                track_string = track_string + string
+            print(track_string)
+
+
+
     def compute_string(self,
                        w: str):
         """Perform a computation of the string 'w', accept or reject"""
@@ -40,7 +56,8 @@ class Computer():
         for i in range(1,len(w)+1):
             self.tracks[0][i] = list(w)[i-1]
         if DEBUG:
-            print(current_state.name, self.tracks)
+            print(current_state.name)
+            self.print_tracks(track_heads)
 
         while not current_state.final:
             try:
@@ -49,7 +66,8 @@ class Computer():
                 print("Reject")
                 break
             if DEBUG:
-                print(current_state.name, self.tracks)
+                print(current_state.name)
+                self.print_tracks(track_heads)
         if current_state.final:
             print("Accept")
 

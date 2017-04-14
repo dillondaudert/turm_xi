@@ -1,0 +1,13 @@
+delta | B,B,B            | a,B,B            | a,X,X          | B,B,X          | B,X,X | a,B,X           | a,X,B 
+q0,N  | q1; B,B,B; R,S,S | -                | -              | -              | -     | -               | -
+q1,N  | q2; B,B,B; S,S,S | q3; a,B,B; S,R,R | -              | -              | -     | -               | -
+q2,F  | -                | -                | -              | -              | -     | -               | -
+q3,N  | -                | q4; a,X,X; S,S,S | -              | -              | -     | -               | -
+q4,N  | -                | -                | q4;a,X,X;R,R,S | q2;B,B,X;S,S,S | -     | q5; a,X,X; S,R,S| -
+q5,N  | -                | q6; a,B,B; S,S,L | -              | -              | -     | q5; a,X,X; S,R,R| -
+q6,N  | -                | q7; a,B,B; S,S,R | -              | -              | -     | q6; a,B,X; S,S,L| -
+q7,N  | -                | q8; a,B,X; S,L,S | -              | -              | -     | q7; a,X,X; S,R,R| -
+q8,N  | q4; B,B,B; R,R,R | q8; a,B,B; L,S,S | q8;a,X,X;S,L,L | -              | -     | q8; a,B,X; S,S,L| q8;a,X,B;S,L,S
+-
+aaaaaaaaa
+aaaaaaa

@@ -1,0 +1,11 @@
+x:a,b | y:a,b,B
+delta | B,B          | x,B          | x,y          | B,y          | x,x          | y,B
+q0,N  | q1; B,B; R,R | -            | -            | -            | -            | -
+q1,N  | q2; B,B; L,L | q1; x,x; R,R | -            | -            | -            | -
+q2,N  | -            | -            | q3; x,y; L,L | q4; B,y; R,R | -            | -
+q3,N  | -            | -            | q2; x,y; L,S | -            | -            | -
+q4,N  | -            | -            | -            | -            | q4; x,x; R,R | q5; y,B; R,R
+q5,F  | -            | -            | -            | -            | -            | -
+-
+abababab
+bbabbaa

@@ -1,4 +1,0 @@
-delta | B | a | b
-q0,N | q1;B;R | - | - 
-q1,N | q2;B;L | q1;b;R | q1;a;R
-q2,F | - | q2;a;L | q2;a;L

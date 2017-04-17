@@ -1,11 +1,12 @@
 #Read a Turing Machine transition table, return a TM object
 import csv
 import os
+from copy import deepcopy
 
 from turm import Computer, State
 from err import ParseError
 
-DEBUG = True
+DEBUG = False
 
 def parse_tm(t_file: str):
     """Parse a transition table from a file.
@@ -15,6 +16,13 @@ def parse_tm(t_file: str):
     with open(t_file, 'r') as csvfile:
 
         reader = csv.reader(csvfile, delimiter='|')
+        #Get the symbol mappings
+        symbols = [symbol.split(':') for symbol in next(reader)]
+        symbol_map = dict()
+        for s in symbols:
+            symbol_map[s[0].strip(' ')] = [let.strip(' ') for let in s[1].split(',')]
+
+        #Get the transition columns
         columns = next(reader)
         inputs = [[letter.strip(' ') for letter in col.split(',')] for col in columns[1:]]
 
@@ -45,7 +53,7 @@ def parse_tm(t_file: str):
         assert type(str2) == str
 
         #Build transition function map
-        trfunc = _create_transition_function(state_map, trans_map, inputs)
+        trfunc = _create_transition_function(state_map, trans_map, inputs, symbol_map)
         #Create alphabet set
         alpha = set()
         [[alpha.add(letter) for letter in col] for col in inputs]
@@ -55,7 +63,8 @@ def parse_tm(t_file: str):
 
 def _create_transition_function(state_map: dict,
                                 trans_map: dict,
-                                inputs: list):
+                                inputs: list,
+                                symbol_map: dict):
     """Return a dictionary mapping (state, [input_symbols]) to
     (state, [output_symbols], [output_actions])"""
 
@@ -63,8 +72,8 @@ def _create_transition_function(state_map: dict,
     trfunc = dict()
     for key in trans_map:
         in_state = state_map[key]
-        t_list = trans_map[key]
-        for i, out in enumerate(t_list):
+        t_cell = trans_map[key]
+        for i, out in enumerate(t_cell):
             if len(out) < 3:
                 continue
 
@@ -72,10 +81,44 @@ def _create_transition_function(state_map: dict,
                 print("Invalid transition defined: %s,%s\n" % (out[1], out[2]))
                 raise ParseError
 
-            new_input = (in_state, tuple(inputs[i]))
+            #Do the mapping of (symbol) : {alphabet} here
+
+
+            #Map symbols to the actual alphabet, create transitions
             out_state = state_map[out[0]]
-            new_output = (out_state, out[1], out[2])
-            trfunc[new_input] = new_output
+
+            #Create initial transition with no swapped characters
+            t_list = [(inputs[i], out[1])]
+            t_list_new = list()
+
+            for symbol in symbol_map:
+                for transition in t_list:
+                    #If the transition has a replaceable symbol
+                    if symbol in transition[0] or symbol in transition[1]:
+                        for char in symbol_map[symbol]:
+                            #Replace all instances of 'symbol' with 'char' in transition
+                            new_transition = deepcopy(transition)
+                            for i, in_sym in enumerate(new_transition[0]):
+                                if in_sym == symbol:
+                                    new_transition[0][i] = char
+
+                            for i, out_sym in enumerate(new_transition[1]):
+                                if out_sym == symbol:
+                                    new_transition[1][i] = char
+                            t_list_new.append(new_transition)
+                    else:
+                        t_list_new.append(deepcopy(transition))
+
+                t_list = t_list_new
+                t_list_new = list()
+
+
+            for inp, outp in t_list:
+                #Create a transition for each pair
+                new_input = (in_state, tuple(inp))
+                new_output = (out_state, outp, out[2])
+                trfunc[new_input] = new_output
+
 
     return trfunc
 

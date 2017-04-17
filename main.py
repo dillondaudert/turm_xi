@@ -3,17 +3,14 @@ import os
 from parse import parse_tm
 
 def main():
-    expath = os.path.join(os.path.dirname(__file__), "examples", "tm.8_6_2")
-    tm, strings = parse_tm(expath)
-    for string in strings:
-        tm.compute_string(string)
-    quit()
-
     expath = os.path.join(os.path.dirname(__file__),"examples")
     for example in os.listdir(expath):
-        tm, strings = parse_tm(expath)
+        print("Example: %s" % example)
+        tm, strings = parse_tm(os.path.join(expath, example))
         for string in strings:
             tm.compute_string(string)
+
+        print()
 
 if __name__ == "__main__":
     main()

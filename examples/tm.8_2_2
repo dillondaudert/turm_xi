@@ -1,3 +1,4 @@
+a:a | b:b | c:c
 delta | B | a | b | c | X | Y | Z
 q0,N  | q1;B;R | - | - | - | - | - | -
 q1,N  | q6;B;R | q2;X;R | - | - | - | q5;Y;R | -

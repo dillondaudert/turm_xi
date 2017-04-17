@@ -2,7 +2,7 @@
 import collections
 from err import TransitionError
 
-DEBUG = True
+DEBUG = False
 
 MachineState = collections.namedtuple('MachineState', ['current_state', 'track_heads'])
 

@@ -1,3 +1,4 @@
+a:a 
 delta | B,B,B            | a,B,B            | a,X,X          | B,B,X          | B,X,X | a,B,X           | a,X,B 
 q0,N  | q1; B,B,B; R,S,S | -                | -              | -              | -     | -               | -
 q1,N  | q2; B,B,B; S,S,S | q3; a,B,B; S,R,R | -              | -              | -     | -               | -

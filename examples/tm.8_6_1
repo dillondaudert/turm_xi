@@ -1,1 +1,9 @@
-delta | 
+a:a | b:b
+delta | B,B | a,B | b,B | a,a 
+q0,N | q1;B,B;R,R | - | - | -
+q1,N | - | q1;a,B;R,R | q2;b,B;R,L | -
+q2,N | q3;B,B;R,R | - | - | q2;a,a;R,L
+q3,F | - | - | - | -
+-
+aaaabaaaa
+aaabaaaa
